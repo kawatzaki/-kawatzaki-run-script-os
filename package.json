@@ -18,6 +18,10 @@
     "independent",
     "multiplatform"
   ],
+  "bin": {
+    "run-script-os": "./index.js",
+    "run-os": "./index.js"
+  },
   "author": "Dr. Amatón",
   "license": "MIT"
 }
