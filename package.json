@@ -1,6 +1,6 @@
 {
   "name": "@dr.amaton/run-script-os",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Fork of the original by charlesguse",
   "main": "index.js",
   "scripts": {
