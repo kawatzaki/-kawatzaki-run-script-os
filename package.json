@@ -1,0 +1,23 @@
+{
+  "name": "@dr.amaton/run-script-os",
+  "version": "1.0.8",
+  "description": "Fork of the original by charlesguse",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\u001b[D\u001b[Chttps://github.com/kawatzaki/dr.amaton-run-script-os.git"
+  },
+  "keywords": [
+    "npm",
+    "run",
+    "run-script",
+    "os",
+    "independent",
+    "multiplatform"
+  ],
+  "author": "Dr. Amatón",
+  "license": "MIT"
+}
