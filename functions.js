@@ -9,6 +9,13 @@
   */
  exports.matchScript = function matchScript(script, platform, scripts) {
   /**
+   * Save the result so we can determine if there was a match
+   * First check for a basic match before we have to go through each script with a regex
+   */
+  let result = (`${script}:${platform}` in scripts) ? `${script}:${platform}` : false;
+  if (result) return result;
+
+  /**
    * Regular expresion match
    * it helps when the "in" operator can't determine if there's a real match or not,
    * due to the properties changing
@@ -23,30 +30,41 @@
    * it also helps to group similar platforms on a single execution
    */
   switch (platform) {
-    case 'win32': return (`${script}:windows` in scripts) ? `${script}:windows` : false;
+    case 'win32':
+      result = (`${script}:windows` in scripts) ? `${script}:windows` : false;
+      break;
 
     case 'aix':
     case 'linux':
     case 'sunos':
     case 'openbsd':
     case 'freebsd':
-    case 'android': return (`${script}:nix` in scripts) ? `${script}:nix` : false;
-
-    case 'darwin':
-    /**
-     * macOS specific scripts (e.g. brew)
-     */
-    if (script === 'darwin')
-      return (`${script}:darwin` in scripts) ? `${script}:darwin` : false;
-
-    /**
-     * nix compatible scripts (cp, rm...)
-     */
-    else if (script === 'nix')
-      return (`${script}:nix`    in scripts) ? `${script}:nix`    : false;
-
+    case 'android':
+      result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
       break;
 
-      default: return false;
+    case 'darwin':
+      /**
+       * macOS specific scripts (e.g. brew)
+       */
+      result = (`${script}:darwin` in scripts) ? `${script}:darwin` : false;
+
+      /**
+       * nix compatible scripts (cp, rm...)
+       */
+      if (!result) result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
+
+      break;
+    default: result = false;
   }
-}
+
+  /**
+   * Successful finding of a given script by platform, present it.
+   */
+  if (result) return result;
+
+  /**
+   * Fall to default if it's given, otherwise fail
+   */
+  return (`${script}:default` in scripts) ? `${script}:default` : false;
+};

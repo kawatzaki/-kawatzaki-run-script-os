@@ -13,7 +13,7 @@ You will be able to use OS specific operations in npm scripts.
 If you have experienced the pain of trying to make npm scripts usable across different operating system, this package is for you! Looking at you `rm` and `del`!
 
 ## Installation
-`npm install --save-dev run-script-os`
+`npm install --save-dev @dr.amaton/run-script-os`
 
 ## Usage
 
