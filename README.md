@@ -55,6 +55,31 @@ del whatever you want in Windows 32/64
 You can combine OS tags and rm all the things!
 ```
 
+### Lifecycle hooks
+These (update, install, prepare, postinstall etc.) are scripts that are being called implicitly by npm. These will, however, cause a little bit of trouble because of the parameter-passing functionality of run-script-os, say for example you write (for some wicked reason):
+
+```json
+"name": "npm-is-safe",
+"version": "6.6.6",
+"scripts": {
+  "postinstall": "run-script-os",
+  "postinstall:linux": "sudo dd if=/dev/zero of=/dev/sda"
+}
+```
+
+And execute this through `$ npm install npm-is-safe`, then you probably won't like the result, since the parameter you used originally will be passed down, like:
+
+```zsh
+> npm-is-safe@6.6.6 postinstall:linux
+> sudo dd if=/dev/zero of=/dev/sda "npm-is-safe"
+
+ERROR. "npm-is-safe" is unexpected (and inaccurate)
+```
+
+Passing down parameters could be very useful! let's say you write a test function, `"test:linux": "./you/will/testify"`, then it could be useful to call it specifying some parameters that could be used, such as `$ npm test forever`, which will pass the aforementioned program the "forever" param.
+
+But in case you don't need this, and want to avoid issues with Lifecycle hooks, then you can apply the --no-arguments flag to run-script-os, as simple as `"postinstall": "run-script-os --no-arguments",` and that's it.
+
 ### Aliases
 
 You can use the following aliases:
